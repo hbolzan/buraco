@@ -2,7 +2,7 @@
   (:require [schema.core :as s]))
 
 (def suits #{:diamonds :clubs :hearts :spades})
-(def faces #{:ace 2 3 4 5 6 7 9 10 :jack :queen :king})
+(def faces #{:ace 2 3 4 5 6 7 8 9 10 :jack :queen :king})
 (def colors #{:red :black})
 
 (s/defschema Suit (apply s/enum suits))
