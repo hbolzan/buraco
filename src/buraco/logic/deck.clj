@@ -39,19 +39,10 @@
   {:deck      (remove #(strictly-same? picked %) deck)
    :pick-pile (conj pick-pile picked)})
 
-(s/defn shuffle :- [m.deck/Card]
-  [deck :- [m.deck/Card]
-   rnd-fn]
-  (loop [piles {:deck deck :pick-pile []}]
-    (if (-> piles :deck count zero?)
-      (vec (:pick-pile piles))
-      (recur (pick-and-move piles (rnd-fn (:deck piles)))))))
-
 (s/defn shuffle-times :- [m.deck/Card]
   [deck :- [m.deck/Card]
-   times :- s/Int
-   rnd-fn]
-  (reduce (fn [d _] (shuffle d rnd-fn)) deck (range times)))
+   times :- s/Int]
+  (reduce (fn [d _] (shuffle d)) deck (range times)))
 
 (s/defn deal-next-round
   [deck hands players-count]

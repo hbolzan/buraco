@@ -25,11 +25,6 @@
                                       a.deck/red-two-of-spades)
                 {:deck a.deck/expected-deck-after-pick-2 :pick-pile a.deck/expected-pick-pile-2}))))
 
-(deftest shuffle-deck-test
-  (let [rnd-fn (a.deck/fake-random a.deck/shuffled-deck)]
-    (s/with-fn-validation
-      (is (match? (l.deck/shuffle a.deck/deck rnd-fn) a.deck/shuffled-deck)))))
-
 (deftest deal-next-round-test
   (is (match? (l.deck/deal-next-round [1 2 3 4] [[] []] 2) {:deck [3 4] :hands [[1] [2]]}))
   (is (match? (l.deck/deal-next-round [3 4] [[1] [2]] 2) {:deck [] :hands [[1 3] [2 4]]})))

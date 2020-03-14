@@ -1,6 +1,6 @@
 (ns buraco.logic.aux.deck)
 
-(defn fake-random [fake-rnd-seq]
+(defn fake-rand-nth [fake-rnd-seq]
   (let [pending* (atom fake-rnd-seq)]
     (fn [_]
       (let [next-rnd (first @pending*)]
