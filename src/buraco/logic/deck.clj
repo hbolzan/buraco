@@ -20,7 +20,7 @@
    suit :- m.deck/Suit]
   (map #(new-card back-color suit %) m.deck/faces))
 
-(s/defn create :- [m.deck/Card]
+(s/defn full-deck :- [m.deck/Card]
   [back-color :- m.deck/Color]
   (conj (reduce (fn [deck suit] (into deck (cards-for-suit back-color suit))) [] m.deck/suits)
         (joker back-color)))
@@ -35,17 +35,17 @@
    {color-b :card/back-color :as b}]
   (and (same? a b) (= color-a color-b)))
 
-(defn pick-card [{:keys [deck shuffled]} removed]
-  {:deck     (remove #(strictly-same? removed %) deck)
-   :shuffled (conj shuffled removed)})
+(defn pick-and-move [{:keys [deck pick-pile]} picked]
+  {:deck      (remove #(strictly-same? picked %) deck)
+   :pick-pile (conj pick-pile picked)})
 
 (s/defn shuffle :- [m.deck/Card]
   [deck :- [m.deck/Card]
    rnd-fn]
-  (loop [decks    {:deck deck :shuffled []}]
-    (if (-> decks :deck count zero?)
-      (vec (:shuffled decks))
-      (recur (pick-card decks (rnd-fn (:deck decks)))))))
+  (loop [piles {:deck deck :pick-pile []}]
+    (if (-> piles :deck count zero?)
+      (vec (:pick-pile piles))
+      (recur (pick-and-move piles (rnd-fn (:deck piles)))))))
 
 (s/defn shuffle-times :- [m.deck/Card]
   [deck :- [m.deck/Card]
@@ -53,18 +53,7 @@
    rnd-fn]
   (reduce (fn [d _] (shuffle d rnd-fn)) deck (range times)))
 
-(s/defn deal :- {:piles [[m.deck/Card]]
+(s/defn deal :- {:hands [[m.deck/Card]]
                  :deck  [m.deck/Card]}
   [deck :- [m.deck/Card]
    players :- s/Int])
-
-;; (let [a (new-card :red :spades :ace)
-;;       b (new-card :black :spades :ace)
-;;       c (new-card :black :spades :jack)]
-;;   (equal-cards? a b))
-
-;; (let [d (create :red)]
-;;   (pick {:deck d :shuffled-deck []} 0))
-
-;; (conj [:a :b :c :d] :e)
-;; (nth [:a :b :c :d] 2)
