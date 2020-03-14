@@ -1,6 +1,11 @@
-# buraco
+# Buraco
 
-FIXME
+## About
+Buraco is a rummy-type card game in the Canasta family. It was invented in Uruguay in the mid-1940s, and is very popular in Brazil, where there are many variations.
+
+This is a Clojure project based on `pedestal-service` template. This is a work in progress and maybe will keep like this for a long time.
+
+The following sections come from the template documentation.
 
 ## Getting Started
 
