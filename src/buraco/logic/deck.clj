@@ -53,7 +53,16 @@
    rnd-fn]
   (reduce (fn [d _] (shuffle d rnd-fn)) deck (range times)))
 
-(s/defn deal :- {:hands [[m.deck/Card]]
-                 :deck  [m.deck/Card]}
+(s/defn deal-next-round
+  [deck hands players-count]
+  {:deck (nthrest deck players-count)
+   :hands (map (fn [card hand] (conj hand card)) (take players-count deck) hands)})
+
+(s/defn deal :- {:hands [[m.deck/Card]] :deck  [m.deck/Card]}
   [deck :- [m.deck/Card]
-   players :- s/Int])
+   cards-count :- s/Int
+   players-count :- s/Int]
+  (let [empty-hands (map (fn [_] []) (range players-count))]
+    (reduce (fn [{:keys [deck hands]} _] (deal-next-round deck hands players-count))
+            {:deck deck :hands empty-hands}
+            (range cards-count))))

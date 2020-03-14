@@ -36,6 +36,18 @@
    black-ace-of-spades
    black-two-of-spades])
 
+(def expected-deal-hands-a
+  [[black-joker red-joker black-ace-of-spades]
+   [red-ace-of-spades red-two-of-spades black-two-of-spades]])
+
+(def expected-deck-after-deal-a [])
+
+(def expected-deal-hands-b
+  [[black-joker red-joker]
+   [red-ace-of-spades red-two-of-spades]])
+
+(def expected-deck-after-deal-b [black-ace-of-spades black-two-of-spades])
+
 (def expected-deck-after-pick-1
   [black-ace-of-spades
    black-two-of-spades
